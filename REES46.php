@@ -2,6 +2,26 @@
 
 class REES46 {
 
+	const API_URL = 'http://api.rees46.com/';
+
+	public $supported_events = array(
+		'view',
+		'cart',
+		'remove_from_cart',
+		'purchase',
+		'rate'
+	);
+
+	public $supported_recommenders = array(
+		'popular',
+		'recently_viewed',
+		'interesting',
+		'also_bought',
+		'similar',
+		'see_also',
+		'buying_now',
+	);
+
 	private $shop_key;
 	private $protect_data = false;
 	private $user_id;
@@ -23,8 +43,8 @@ class REES46 {
 	/**
 	 * Установить данные пользвателя.
 	 * Выполняйте этот метод перед первым обращением пользователя к API.
-	 * @param $user_id Идентификатор пользователя в вашей системе для более эффективной персонализации.
-	 * @param $email E-mail пользователя для более эффективной персонализации.
+	 * @param Integer $user_id Идентификатор пользователя в вашей системе для более эффективной персонализации.
+	 * @param String $email E-mail пользователя для более эффективной персонализации.
 	 * @param bool $protect_data Передавать на сервер только MD5-хеш от e-mail
 	 */
 	public function setUser($user_id, $email, $protect_data = false) {
@@ -44,73 +64,96 @@ class REES46 {
 
 
 	/**
-	 * Отправляет событие о поведении пользователя на API REES46
+	 * Отправляет событие о поведении пользователя на API REES46.
+	 * При добавлении новых событий не забудьте отредактировать $this->supported_events.
 	 * @param String $event Имя события.
 	 * @param Array $params Параметры события.
 	 */
 	public function track($event, $params) {
 		$data = null;
-		switch($event) {
-			case 'view':
-				$data = $this->prepare_item_data_for_track($params);
-				break;
-			case 'cart':
-				$data = $this->prepare_item_data_for_track($params);
-				break;
-			case 'remove_from_cart':
-				$data = $this->prepare_item_data_for_track($params);
-				break;
-			case 'purchase':
-				if(is_array($params) && count($params) > 0) {
-					$data = array();
-					foreach($params as $element) {
-						$data[] = $this->prepare_item_data_for_track($element);
+
+		if(in_array($event, $this->supported_events)) {
+
+			switch($event) {
+
+				case 'view':
+					$data = $this->prepare_item_data_for_track($params);
+					break;
+
+				case 'cart':
+					$data = $this->prepare_item_data_for_track($params);
+					break;
+
+				case 'remove_from_cart':
+					$data = $this->prepare_item_data_for_track($params);
+					break;
+
+				case 'purchase':
+					if(is_array($params) && count($params) > 0) {
+						$data = array();
+						foreach($params as $element) {
+							$data[] = $this->prepare_item_data_for_track($element);
+						}
 					}
-				}
-				break;
-			case 'rate':
-				$data = $this->prepare_item_data_for_track($params);
-				break;
-		}
-		if(is_array($data)) {
-			$this->request('event', $event, $data);
+					break;
+
+				case 'rate':
+					$data = $this->prepare_item_data_for_track($params);
+					break;
+			}
+
+			if(is_array($data)) {
+				$this->request('event', $event, $data);
+			}
+
 		}
 	}
 
 
 	/**
 	 * Запрашивает у API REES46 рекомендации для пользователя.
+	 * При добавлении новых рекоммендеров не забудьте отредактировать $this->supported_recommenders.
 	 * @param String $type Тип рекомендации
 	 * @param Array $params Параметры рекомендации
 	 * @param Integer $limit Максимальное число рекомендованных товаров
 	 * @return Array Массив идентификаторов рекомендованных товаров
+	 * @todo implement it
 	 */
 	public function recommend($type, $params = array(), $limit = 10) {
 
 		$ids = array();
 
-		switch($type) {
-			case 'popular':
-				break;
-			case 'recently_viewed':
-				break;
-			case 'interesting':
-				break;
-			case 'also_bought':
-				break;
-			case 'similar':
-				break;
-			case 'see_also':
-				break;
-			case 'buying_now':
-				break;
+		if(in_array($type, $this->supported_recommenders)) {
+
+			switch($type) {
+				case 'popular':
+					break;
+				case 'recently_viewed':
+					break;
+				case 'interesting':
+					break;
+				case 'also_bought':
+					break;
+				case 'similar':
+					break;
+				case 'see_also':
+					break;
+				case 'buying_now':
+					break;
+			}
+
 		}
 
 		return $ids;
 	}
 
 
-
+	/**
+	 * @param $type
+	 * @param $name
+	 * @param $data
+	 * @todo implement it
+	 */
 	private function request($type, $name, $data) {
 
 		switch($type) {
@@ -127,7 +170,7 @@ class REES46 {
 
 	/**
 	 * Подготавливает конечный массив данных по одному товару для операции трекинга события
-	 * @param $source Исходный массив данных, полученный от программы
+	 * @param $source Array Исходный массив данных, полученный от программы
 	 * @return array
 	 */
 	private function prepare_item_data_for_track($source) {
