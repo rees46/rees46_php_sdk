@@ -193,7 +193,7 @@ class REES46 {
 			if(count($params['cart']) > 0) {
 				$data['cart_count'] = count($params['cart']);
 				foreach($params['cart'] as $key => $id) {
-					$data["cart_count[{$key}]"] = $id;
+					$data["cart_item_id[{$key}]"] = $id;
 				}
 			}
 		}
