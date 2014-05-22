@@ -179,30 +179,39 @@ class REES46 {
 	 */
 	public function recommend($type, $params = array(), $limit = 10) {
 
+		assert(in_array($type, $this->supported_recommenders));
+		assert(is_int($limit));
+		assert($limit > 0);
+		assert($limit < 200);
+		assert(is_array($params));
+
 		$ids = array();
 
-		if(in_array($type, $this->supported_recommenders)) {
-
-			switch($type) {
-				case 'popular':
-					break;
-				case 'recently_viewed':
-					break;
-				case 'interesting':
-					break;
-				case 'also_bought':
-					break;
-				case 'similar':
-					break;
-				case 'see_also':
-					break;
-				case 'buying_now':
-					break;
+		if(isset($params['item'])) $data['item_id'] = $params['item'];
+		if(isset($params['cart'])) {
+			assert(is_array($params['cart']));
+			if(count($params['cart']) > 0) {
+				$data['cart_count'] = count($params['cart']);
+				foreach($params['cart'] as $key => $id) {
+					$data["cart_count[{$key}]"] = $id;
+				}
 			}
+		}
+		$data['limit'] = $limit;
+		$data['recommender_type'] = $type;
+		$data = $this->append_it_with_service_data($data);
 
+		assert(is_array($data));
+
+		$response = $this->request('recommend', $data);
+
+		if($response !== false) {
+			assert(is_array($response));
+			$ids = $response;
 		}
 
 		return $ids;
+
 	}
 
 
@@ -246,11 +255,12 @@ class REES46 {
 
 		if($response_info['http_code'] < 200 || $response_info['http_code'] >= 300) {
 			$data_as_string = var_export($data, true);
-			error_log("Error request method '{$method}'\n\nData:\n'{$data_as_string}'\n\nResponse:\n'{$response_body->message}'");
+			$response_as_string = var_export($response_info, true);
+			error_log("Error request method '{$method}'\n\nData:\n'{$data_as_string}'\n\nResponse Info:\n{$response_as_string}\n\nResponse:\n'{$response_body->message}'");
 			return false;
 		}
 
-		return $response;
+		return $response_body;
 
 	}
 
@@ -302,8 +312,10 @@ class REES46 {
 	 */
 	private function append_it_with_service_data($data) {
 
-		assert(isset($data['count']));
-		assert($data['count'] > 0);
+		if(isset($data['event'])) {
+			assert(isset($data['count']));
+			assert($data['count'] > 0);
+		}
 
 		if(!empty($this->shop_key)) 		$data['shop_id'] = $this->shop_key;
 		if(!empty($this->ssid)) 			$data['ssid'] = $this->ssid;
