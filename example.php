@@ -1,62 +1,30 @@
 <?php
 
-define('SHOP_ID', 'e10adc3949ba59abbe56e057f20f883e');
-
 require 'REES46.php';
 
-// Инициализируем модуль
-$rees46 = new REES46(SHOP_ID);
+define('SHOP_ID', 'b6ef5e0003904ba8245eb7aac0c286');
+define('SHOP_NUMBER', 159);
 
-// Инициализируем пользователя
-$rees46->setUser(33, 'mk@rees46.com', false);
+// Test parts flags
+define('TEST_GENERATE_SSID', false);
+define('TEST_PUSH', true);
+define('TEST_RECOMMENDATIONS', true);
 
+if(TEST_GENERATE_SSID) {
+	$rees46 = new REES46(SHOP_ID);
+} else {
+	$rees46 = new REES46(SHOP_ID, 'b023e34f-8f76-403b-8772-b14408ad72e8');
+}
 
+$ssid = $rees46->getSSID();
+assert(!empty($ssid));
 
-// ** Трекаем несколько событий
+$rees46->setUser(33, 'sam@mkechinov.ru', false);
 
-// Пользователь посмотрел товар
-$rees46->track('view', array(
-	'item_id' => 15,
-    'price' => 2000,
-    'is_available' => 1,
-    'category' => 9,
-	'name' => 'iPhone 5S Gold',
-	'description' => 'Самый классный и модный iPhone из всех андроидов',
-	'url' => 'http://market.yandex.ru/model.xml?text=apple%20iphone%205s%2016gb&srnum=537&modelid=10495456&hid=91491',
-	'image_url' => 'http://mdata.yandex.net/i?path=b0910230234_img_id2130334858748450706.jpg',
-	'tags' => 'iphone, phone, smartphone, gold'
-));
+if(TEST_PUSH) {
 
-// Пользователь добавил товар в корзину
-$rees46->track('cart', array(
-	'item_id' => 15,
-	'price' => 2000,
-	'is_available' => 1,
-	'category' => 9,
-	'name' => 'iPhone 5S Gold',
-	'description' => 'Самый классный и модный iPhone из всех андроидов',
-	'url' => 'http://market.yandex.ru/model.xml?text=apple%20iphone%205s%2016gb&srnum=537&modelid=10495456&hid=91491',
-	'image_url' => 'http://mdata.yandex.net/i?path=b0910230234_img_id2130334858748450706.jpg',
-	'tags' => 'iphone, phone, smartphone, gold'
-));
-
-// Пользователь убрал товар из корзины
-$rees46->track('remove_from_cart', array(
-	'item_id' => 15,
-	'price' => 2000,
-	'is_available' => 1,
-	'category' => 9,
-	'name' => 'iPhone 5S Gold',
-	'description' => 'Самый классный и модный iPhone из всех андроидов',
-	'url' => 'http://market.yandex.ru/model.xml?text=apple%20iphone%205s%2016gb&srnum=537&modelid=10495456&hid=91491',
-	'image_url' => 'http://mdata.yandex.net/i?path=b0910230234_img_id2130334858748450706.jpg',
-	'tags' => 'iphone, phone, smartphone, gold'
-));
-
-// Пользователь оформил заказ на один или несколько товаров
-$rees46->track('purchase', array(
-	'order_id' => 338,
-	'items' => array(
+	// Test view event
+	$rees46->track('view', array(
 		array(
 			'item_id' => 15,
 			'price' => 2000,
@@ -66,78 +34,161 @@ $rees46->track('purchase', array(
 			'description' => 'Самый классный и модный iPhone из всех андроидов',
 			'url' => 'http://market.yandex.ru/model.xml?text=apple%20iphone%205s%2016gb&srnum=537&modelid=10495456&hid=91491',
 			'image_url' => 'http://mdata.yandex.net/i?path=b0910230234_img_id2130334858748450706.jpg',
-			'tags' => 'iphone, phone, smartphone, gold',
-			'recommended_by' => 'popular'
-		),
-		array(
-			'item_id' => 16,
-			'price' => 3000,
-			'is_available' => 1,
-			'category' => 12,
-			'name' => 'MacBook Air',
-			'recommended_by' => null
+			'tags' => 'iphone, phone, smartphone, gold'
 		)
-	)
-));
+	));
 
-// Пользователь оценил товар
-$rees46->track('rate', array(
-	'rating' => 3.5,
-	'item_id' => 15,
-	'price' => 2000,
-	'is_available' => 1,
-	'category' => 9,
-	'name' => 'iPhone 5S Gold',
-	'description' => 'Самый классный и модный iPhone из всех андроидов',
-	'url' => 'http://market.yandex.ru/model.xml?text=apple%20iphone%205s%2016gb&srnum=537&modelid=10495456&hid=91491',
-	'image_url' => 'http://mdata.yandex.net/i?path=b0910230234_img_id2130334858748450706.jpg',
-	'tags' => 'iphone, phone, smartphone, gold'
-));
+	// Test cart event
+	$rees46->track('cart', array(
+		array(
+			'item_id' => 15,
+			'price' => 2000,
+			'is_available' => 1,
+			'category' => 9,
+			'name' => 'iPhone 5S Gold',
+			'description' => 'Самый классный и модный iPhone из всех андроидов',
+			'url' => 'http://market.yandex.ru/model.xml?text=apple%20iphone%205s%2016gb&srnum=537&modelid=10495456&hid=91491',
+			'image_url' => 'http://mdata.yandex.net/i?path=b0910230234_img_id2130334858748450706.jpg',
+			'tags' => 'iphone, phone, smartphone, gold'
+		)
+	));
+
+	// Test remove from cart event
+	$rees46->track('remove_from_cart', array(
+		array(
+			'item_id' => 15,
+			'price' => 2000,
+			'is_available' => 1,
+			'category' => 9,
+			'name' => 'iPhone 5S Gold',
+			'description' => 'Самый классный и модный iPhone из всех андроидов',
+			'url' => 'http://market.yandex.ru/model.xml?text=apple%20iphone%205s%2016gb&srnum=537&modelid=10495456&hid=91491',
+			'image_url' => 'http://mdata.yandex.net/i?path=b0910230234_img_id2130334858748450706.jpg',
+			'tags' => 'iphone, phone, smartphone, gold'
+		)
+	));
+
+	// Test rate event
+	$rees46->track('rate', array(
+		array(
+			'item_id' => 15,
+			'price' => 2000,
+			'is_available' => 1,
+			'category' => 9,
+			'name' => 'iPhone 5S Gold',
+			'image_url' => 'http://mdata.yandex.net/i?path=b0910230234_img_id2130334858748450706.jpg',
+			'tags' => 'iphone, phone, smartphone, gold',
+			'rating' => 4
+		)
+	));
+
+	// Test purchase event
+	$rees46->track('purchase', array(
+			array(
+				'item_id' => 15,
+				'price' => 2000,
+				'is_available' => 1,
+				'category' => 9,
+				'name' => 'iPhone 5S Gold',
+				'image_url' => 'http://mdata.yandex.net/i?path=b0910230234_img_id2130334858748450706.jpg',
+				'tags' => 'iphone, phone, smartphone, gold',
+				'rating' => 4,
+				'recommended_by' => 'popular'
+			),
+			array(
+				'item_id' => 11,
+				'price' => 3000,
+				'is_available' => 1,
+				'category' => 12,
+				'image_url' => 'http://mdata.yandex.net/i?path=b0910230234_img_id2130334858748450706.jpg',
+				'tags' => 'iphone, phone, smartphone, gold'
+			)
+		),
+		33
+	);
+
+}
+
+if(TEST_RECOMMENDATIONS) {
+
+	// Popular
+	$ids = $rees46->recommend('popular');
+	assert(is_array($ids));
+
+	// Popular in category
+	$ids = $rees46->recommend(
+		'popular',
+		array(
+			'category' => 99
+		),
+		20
+	);
+	assert(is_array($ids));
+
+	// Interesting
+	$ids = $rees46->recommend('interesting');
+	assert(is_array($ids));
+
+	// Interesting except current item
+	$ids = $rees46->recommend(
+		'interesting',
+		array(
+			'item' => 33
+		),
+		20
+	);
+	assert(is_array($ids));
+
+	// Also bought
+	$ids = $rees46->recommend(
+		'also_bought',
+		array(
+			'item' => 33
+		)
+	);
+	assert(is_array($ids));
+
+	// Similar
+	$ids = $rees46->recommend(
+		'similar',
+		array(
+			'item' => 33
+		)
+	);
+	assert(is_array($ids));
 
 
+	// Similar except cart
+	$ids = $rees46->recommend(
+		'similar',
+		array(
+			'item' => 33,
+			'cart' => array(17,87)
+		)
+	);
+	assert(is_array($ids));
 
-// ** Запрос рекомендаций
+	// See also
+	$ids = $rees46->recommend(
+		'see_also',
+		array(
+			'cart' => array(17,87)
+		)
+	);
+	assert(is_array($ids));
 
-// Просто популярные товары с учетом интересов пользователя
-$ids = $rees46->recommend('popular');
+	// Recently viewed
+	$ids = $rees46->recommend('recently_viewed');
+	assert(is_array($ids));
 
-// Популярные товары в конкретной категории с учетом интересов пользователя
-$ids = $rees46->recommend('popular', array(
-	'category' => 15
-));
+	// Buying now except current and cart
+	$ids = $rees46->recommend(
+		'buying_now',
+		array(
+			'item' => 33,
+			'cart' => array(17,87)
+		)
+	);
+	assert(is_array($ids));
 
-// Недавно просмотренные пользователем товары
-$ids = $rees46->recommend('recently_viewed');
-
-// Товары, которые заинтересуют пользователя, за исключением того, который передан параметром
-$ids = $rees46->recommend('interesting', array(
-	'item' => 337
-));
-
-// Сопутствующие товары
-$ids = $rees46->recommend(
-	'also_bought',
-	array(
-		'item' => 337
-	),
-	4
-);
-
-// Похожие товары, за исключением тех, которые есть в корзине
-$ids = $rees46->recommend('similar', array(
-	'item' => 337,
-	'cart' => array(12, 33984, 353)
-));
-
-// "Посмотрите также", за исключением тех, которые есть в корзине
-$ids = $rees46->recommend('see_also', array(
-	'cart' => array(12, 33984, 353)
-));
-
-// Прямо сейчас люди пкоупают
-$ids = $rees46->recommend('buying_now', array(
-	'item' => 337,
-	'cart' => array(12, 33984, 353)
-));
-
-
+}
