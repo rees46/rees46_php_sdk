@@ -94,14 +94,15 @@ if(TEST_PUSH) {
 				'image_url' => 'http://mdata.yandex.net/i?path=b0910230234_img_id2130334858748450706.jpg',
 				'tags' => 'iphone, phone, smartphone, gold',
 //				'rating' => 4,
-				'recommended_by' => 'popular'
+//				'recommended_by' => 'popular'
 			),
 			array(
 				'item_id' => 11,
 				'price' => 3000,
+				'name' => 'iPhone 5S Gray',
 				'is_available' => 1,
 				'category' => 12,
-				'image_url' => 'http://mdata.yandex.net/i?path=b0910230234_img_id2130334858748450706.jpg',
+//				'image_url' => 'http://mdata.yandex.net/i?path=b0910230234_img_id2130334858748450706.jpg',
 				'tags' => 'iphone, phone, smartphone, gold'
 			)
 		),
