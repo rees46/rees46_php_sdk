@@ -254,9 +254,10 @@ class REES46 {
 		$response_body = json_decode($response);
 
 		if($response_info['http_code'] < 200 || $response_info['http_code'] >= 300) {
+
 			$data_as_string = var_export($data, true);
 			$response_as_string = var_export($response_info, true);
-			error_log("Error request method '{$method}'\n\nData:\n'{$data_as_string}'\n\nResponse Info:\n{$response_as_string}\n\nResponse:\n'{$response_body->message}'");
+			error_log("Error request method '{$method}'\n\nURL:\n{$url}\n\nData:\n'{$data_as_string}'\n\nResponse Info:\n{$response_as_string}\n\nResponse:\n'{$response_body->message}'");
 			return false;
 		}
 
