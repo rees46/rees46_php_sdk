@@ -251,7 +251,11 @@ class REES46 {
 		// Clean response
 		$response = trim($response);
 
-		$response_body = json_decode($response);
+		if(strpos($response_info['content_type'], 'application/json') !== false) {
+			$response_body = json_decode($response);
+		} else {
+			$response_body = $response;
+		}
 
 		if($response_info['http_code'] < 200 || $response_info['http_code'] >= 300) {
 
