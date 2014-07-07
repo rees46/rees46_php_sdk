@@ -294,7 +294,7 @@ class REES46 {
 			if(!empty($item['url'])) 			$data["url[{$key}]"] 			= $item['url'];
 			if(!empty($item['image_url'])) 		$data["image_url[{$key}]"] 	= $item['image_url'];
 			if(!empty($item['tags'])) 			$data["tags[{$key}]"] 		= $item['tags'];
-			if(!empty($item['rating'])) 		$data["rating[{$key}]"] 		= $item['rating'];
+			if(!empty($item['rating'])) 		$data["rating"] 		= $item['rating'];
 			if(!empty($item['recommended_by'])) $data["recommended_by[{$key}]"] = $item['recommended_by'];
 		}
 
