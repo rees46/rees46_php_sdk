@@ -87,7 +87,7 @@ foreach($chunks as $key => $chunk) {
 	$data = array(
 		'shop_id' => SHOP_ID,
 		'shop_secret' => SHOP_SECRET,
-		'orders' => $chunk
+		'orders' => json_encode($chunk)
 	);
 	curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
 
@@ -100,7 +100,7 @@ foreach($chunks as $key => $chunk) {
 		error_log("Error request \n\nData:\n'{$data_as_string}'\n\nResponse Info:\n{$response_as_string}\n\nResponse:\n'{$response_body->message}'");
 		exit(1);
 	} else {
-		echo 'Chunk ' . ($key+1) . ' done.' . PHP_EOL;
+		echo 'Chunk ' . ($key+1) . ' done. Response: ' . $response . PHP_EOL;
 	}
 
 }
