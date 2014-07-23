@@ -89,8 +89,7 @@ foreach($chunks as $key => $chunk) {
 		'shop_secret' => SHOP_SECRET,
 		'orders' => $chunk
 	);
-
-	curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
 
 	$response = curl_exec($ch);
 	$response_info = curl_getinfo($ch);
