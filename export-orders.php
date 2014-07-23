@@ -34,35 +34,35 @@ define('SHOP_SECRET', '14fd926018b405cbb18c24b6724a5ad8');
 // So you need to change this code according your shop architecture.
 $orders = array(
 	array(
-		'id' => 'order1',
+		'id' => 'order3',
 		'user_id' => 334,
 		'date' => 1406057494,
 		'items' => array(
 			array(
-				'id' => 101,
+				'id' => 105,
 				'price' => 3400,
-				'category_id' => 14,
+				'category_uniqid' => 14,
 				'is_available' => 1,
 				'amount' => 2
 			),
 			array(
-				'id' => 102,
+				'id' => 106,
 				'price' => 3100,
-				'category_id' => 19,
+				'category_uniqid' => 19,
 				'is_available' => 1,
 				'amount' => 1
 			)
 		)
 	),
 	array(
-		'id' => 'order2',
+		'id' => 'order4',
 		'user_id' => 18,
 		'date' => 1406057499,
 		'items' => array(
 			array(
-				'id' => 101,
+				'id' => 107,
 				'price' => 3400,
-				'category_id' => 14,
+				'category_uniqid' => 14,
 				'is_available' => 1,
 				'amount' => 1
 			)
@@ -79,6 +79,7 @@ curl_setopt($ch, CURLOPT_HEADER, 0);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_POST, true);
 curl_setopt($ch, CURLOPT_URL, 'http://api.rees46.com/import/orders');
+curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
 
 // Split orders by 1000 per request
 $chunks = array_chunk($orders, 1000);
@@ -87,9 +88,10 @@ foreach($chunks as $key => $chunk) {
 	$data = array(
 		'shop_id' => SHOP_ID,
 		'shop_secret' => SHOP_SECRET,
-		'orders' => json_encode($chunk)
+		'orders' => $chunk
 	);
-	curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+	$body = json_encode($data);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
 
 	$response = curl_exec($ch);
 	$response_info = curl_getinfo($ch);
