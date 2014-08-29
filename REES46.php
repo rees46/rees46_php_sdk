@@ -229,6 +229,7 @@ class REES46 {
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_HEADER, 0);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 3);
 
 		switch($this->get_api_request_type($method)) {
 			case 'GET':
