@@ -289,7 +289,7 @@ class REES46 {
 			if(!empty($item['price'])) 			$data["price[{$key}]"] 		= $item['price'];
 			if(!empty($item['is_available'])) 	$data["is_available[{$key}]"] = $item['is_available'];
 			if(!empty($item['category'])) 		$data["category[{$key}]"] 	= $item['category'];
-			if(!empty($item['categories'])) 		$data["categories[{$key}]"] 	= $item['categories'];
+			if(!empty($item['categories'])) 		$data["categories[{$key}]"] 	= implode(',', $item['categories']);
 			if(!empty($item['name'])) 			$data["name[{$key}]"] 		= $item['name'];
 			if(!empty($item['description'])) 	$data["description[{$key}]"] 	= $item['description'];
 			if(!empty($item['locations'])) 		$data["locations[{$key}]"] 	= $item['locations'];
@@ -351,4 +351,4 @@ class REES46 {
 	}
 
 
-} 
+}

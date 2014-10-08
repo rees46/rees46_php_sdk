@@ -11,7 +11,7 @@ define('TEST_PUSH', true);
 define('TEST_RECOMMENDATIONS', true);
 
 if(TEST_GENERATE_SSID) {
-	
+
 	// Если пользователь совсем новый, то его необходимо инициализировать на стороне REES46 API - просто получите у него уникальный идентификатор
 	$rees46 = new REES46(SHOP_ID);
 
@@ -40,7 +40,7 @@ if(TEST_PUSH) {
 			'item_id' => 15,
 			'price' => 2000,
 			'is_available' => 1,
-			'category' => 9,
+			'categories' => array(5, 7),
 			'name' => 'iPhone 5S Gold',
 			'description' => 'Самый классный и модный iPhone из всех андроидов',
 			'url' => 'http://market.yandex.ru/model.xml?text=apple%20iphone%205s%2016gb&srnum=537&modelid=10495456&hid=91491',
@@ -55,7 +55,7 @@ if(TEST_PUSH) {
 			'item_id' => 15,
 			'price' => 2000,
 			'is_available' => 1,
-			'category' => 9,
+			'categories' => array(5, 7),
 			'name' => 'iPhone 5S Gold',
 			'description' => 'Самый классный и модный iPhone из всех андроидов',
 			'url' => 'http://market.yandex.ru/model.xml?text=apple%20iphone%205s%2016gb&srnum=537&modelid=10495456&hid=91491',
@@ -70,7 +70,7 @@ if(TEST_PUSH) {
 			'item_id' => 15,
 			'price' => 2000,
 			'is_available' => 1,
-			'category' => 9,
+			'categories' => array(5, 7),
 			'name' => 'iPhone 5S Gold',
 			'description' => 'Самый классный и модный iPhone из всех андроидов',
 			'url' => 'http://market.yandex.ru/model.xml?text=apple%20iphone%205s%2016gb&srnum=537&modelid=10495456&hid=91491',
@@ -86,7 +86,7 @@ if(TEST_PUSH) {
 			'item_id' => 15,
 			'price' => 2000,
 			'is_available' => 1,
-			'category' => 9,
+			'categories' => array(5, 7),
 			'name' => 'iPhone 5S Gold',
 			'image_url' => 'http://mdata.yandex.net/i?path=b0910230234_img_id2130334858748450706.jpg',
 			'tags' => 'iphone, phone, smartphone, gold',
@@ -100,7 +100,7 @@ if(TEST_PUSH) {
 				'item_id' => 15,
 				'price' => 2000,
 				'is_available' => 1,
-				'category' => 9,
+				'categories' => array(5, 7),
 				'name' => 'iPhone 5S Gold',
 				'image_url' => 'http://mdata.yandex.net/i?path=b0910230234_img_id2130334858748450706.jpg',
 				'tags' => 'iphone, phone, smartphone, gold',
@@ -146,7 +146,7 @@ if(TEST_RECOMMENDATIONS) {
 	$ids = $rees46->recommend(
 		'interesting',
 		array(
-			'item' => 33
+			'item' => 15
 		),
 		20
 	);
@@ -156,7 +156,7 @@ if(TEST_RECOMMENDATIONS) {
 	$ids = $rees46->recommend(
 		'also_bought',
 		array(
-			'item' => 33
+			'item' => 15
 		)
 	);
 	assert(is_array($ids));
@@ -165,7 +165,7 @@ if(TEST_RECOMMENDATIONS) {
 	$ids = $rees46->recommend(
 		'similar',
 		array(
-			'item' => 33
+			'item' => 15
 		)
 	);
 	assert(is_array($ids));
@@ -175,7 +175,7 @@ if(TEST_RECOMMENDATIONS) {
 	$ids = $rees46->recommend(
 		'similar',
 		array(
-			'item' => 33,
+			'item' => 15,
 			'cart' => array(17,87)
 		)
 	);
@@ -198,7 +198,7 @@ if(TEST_RECOMMENDATIONS) {
 	$ids = $rees46->recommend(
 		'buying_now',
 		array(
-			'item' => 33,
+			'item' => 15,
 			'cart' => array(17,87)
 		)
 	);
