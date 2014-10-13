@@ -45,7 +45,8 @@ if(TEST_PUSH) {
 			'description' => 'Самый классный и модный iPhone из всех андроидов',
 			'url' => 'http://market.yandex.ru/model.xml?text=apple%20iphone%205s%2016gb&srnum=537&modelid=10495456&hid=91491',
 			'image_url' => 'http://mdata.yandex.net/i?path=b0910230234_img_id2130334858748450706.jpg',
-			'tags' => 'iphone, phone, smartphone, gold'
+			'tags' => 'iphone, phone, smartphone, gold',
+			'recommended_by' => 'interesting'
 		)
 	));
 
