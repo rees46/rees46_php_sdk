@@ -45,7 +45,12 @@ class REES46 {
 	public function __construct($shop_key, $ssid = null) {
 		$this->shop_key = $shop_key;
 		if(empty($ssid)) {
-			$this->ssid = $this->generateSSID();
+			$ssidCookies = filter_input(INPUT_COOKIE, 'rees46_session_id',FILTER_SANITIZE_STRING);
+			if(empty($ssidCookies)){
+				$this->ssid = $this->generateSSID();
+			}else{
+				$this->ssid = $ssidCookies;
+			}
 		} else {
 			$this->ssid = $ssid;
 		}
@@ -69,6 +74,8 @@ class REES46 {
 		if(empty($this->ssid)) {
 			$response = $this->request('generate_ssid', array('shop_id' => $this->shop_key));
 			assert(!empty($response));
+			// ставим куку на год
+			setcookie ('rees46_session_id',$response,time()+60*60*24*365,'/' );
 			return $response;
 		} else {
 			return $this->ssid;
