@@ -80,21 +80,6 @@ if(TEST_PUSH) {
 		)
 	));
 
-	// Test rate event
-	// @deprecated
-	$rees46->track('rate', array(
-		array(
-			'item_id' => 15,
-			'price' => 2000,
-			'is_available' => 1,
-			'categories' => array(5, 7),
-			'name' => 'iPhone 5S Gold',
-			'image_url' => 'http://mdata.yandex.net/i?path=b0910230234_img_id2130334858748450706.jpg',
-			'tags' => 'iphone, phone, smartphone, gold',
-			'rating' => 4
-		)
-	));
-
 	// Test purchase event
 	$rees46->track('purchase', array(
 			array(

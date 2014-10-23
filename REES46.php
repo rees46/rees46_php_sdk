@@ -9,8 +9,7 @@ class REES46 {
 		'view',
 		'cart',
 		'remove_from_cart',
-		'purchase',
-		'rate'
+		'purchase'
 	);
 	private $api_methods = array(
 		'generate_ssid' => array('method' => 'GET'),
@@ -144,12 +143,6 @@ class REES46 {
 					if ($order_id) {
 						$data['order_id'] = $order_id;
 					}
-					$data['event'] = $event;
-					break;
-
-				case 'rate':
-					$data = $this->prepare_item_data_for_track($items);
-					$data = $this->append_it_with_service_data($data);
 					$data['event'] = $event;
 					break;
 			}
