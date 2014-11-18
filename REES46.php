@@ -219,6 +219,7 @@ class REES46 {
 		srand((double) microtime() * 1000000);
 		$boundary = "---------------------------" . substr(md5(rand(0, 32000)), 0, 10);
 
+		$post = '';
 
 		$crlf = "\r\n";
 
