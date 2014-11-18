@@ -189,6 +189,9 @@ class REES46 {
 		}
 		$data['limit'] = $limit;
 		$data['recommender_type'] = $type;
+		if(isset($params['locations']) && !is_null($params['locations']) && $params['locations'] != '') {
+			$data['locations'] = $params['locations'];
+		}
 		$data = $this->append_it_with_service_data($data);
 
 		assert(is_array($data));
@@ -284,7 +287,8 @@ class REES46 {
 		$response = curl_exec($ch);
 		$response_info = curl_getinfo($ch);
 		curl_close($ch);
-// Clean response
+
+		// Clean response
 		$response = trim($response);
 
 		if (strpos($response_info['content_type'], 'application/json') !== false) {
