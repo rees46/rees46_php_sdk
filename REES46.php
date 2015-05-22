@@ -302,7 +302,8 @@ class REES46 {
 
 			$data_as_string = var_export($data, true);
 			$response_as_string = var_export($response_info, true);
-			error_log("Error request method '{$method}'\n\nURL:\n{$url}\n\nData:\n'{$data_as_string}'\n\nResponse Info:\n{$response_as_string}\n\nResponse:\n'{$response_body->message}'");
+			$response_message = isset($response_body->message) ? $response_body->message : '';
+			error_log("Error request method '{$method}'\n\nURL:\n{$url}\n\nData:\n'{$data_as_string}'\n\nResponse Info:\n{$response_as_string}\n\nResponse:\n'{$response_message}'");
 			return false;
 		}
 		return $response_body;
