@@ -8,39 +8,27 @@
  *
  * Assumes you have tables in database:
  * orders:
- *   id:integer
- *   user_id:integer
- *   total_sum:integer
- *   created_at:datetime
- * order_items:
- *   order_id:integer
- *   item_id:integer
- *   price:integer
- *   amount:integer
- * items:
- *   id:integer
- *   price:integer
- *   category_id:integer
- *   is_available:boolean
+ *   id:string
+ *   status:integer
  *
  */
 
 // Edit these parameters according to your shop credentials
-define('SHOP_ID', 'b6ef5e0003904ba8245eb7aac0c286');
-define('SHOP_SECRET', '14fd926018b405cbb18c24b6724a5ad8');
+define('SHOP_ID', 'c60f487cca799ab42f1e0127b4f232');
+define('SHOP_SECRET', '7f2df453d92cd48c5e52c1aeb9f4c812');
 
 // Here prepare your orders data from your database.
 // In this example we just prepare array of data instead of database data.
 // So you need to change this code according your shop architecture.
 $orders = array(
 	array(
-		'id' => 'order3',
+		'id' => '153404',
 		'status' => 0
 	),
-	array(
-		'id' => 'order4',
-		'status' => 1
-	)
+	// array(
+	// 	'id' => 'order4',
+	// 	'status' => 1
+	// )
 );
 
 
