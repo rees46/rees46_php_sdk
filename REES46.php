@@ -223,24 +223,29 @@ class REES46 {
 
 		$crlf = "\r\n";
 
-		$post .="--$boundary";
+		/*$post .="--$boundary";
 		foreach ($data AS $index => $value) {
 			$post .= $crlf . "Content-Disposition: form-data; name=\"$index\"\r\n";
 			$post .= "\r\n$value\r\n";
 			$post .="--$boundary";
 		}
-		$post.="--\r\n\r\n";
-
+		$post.="--\r\n\r\n";*/
+		
+		$post .= http_build_query($data);
+		
 		$clength = strlen($post);
 
 		$request = "POST /$method HTTP/1.1$crlf";
 		$request .= "Host: " . self::API_URL . $crlf;
 		$request .= "Accept: */*$crlf";
 		$request .= "Content-Length: $clength$crlf";
+		$request .= "Cache-Control:no-cache$crlf";
 		$request .= "Expect: 100-continue$crlf";
+		$request .= "Pragma:no-cache$crlf";
 		$request .= "Connection: Close$crlf";
-		$request .= "Content-Type: multipart/form-data, boundary=$boundary$crlf$crlf";
+		$request .= "Content-Type: application/x-www-form-urlencoded$crlf$crlf";
 		$request .= $post;
+		$request .= "$crlf$crlf";
 
 		if (($fp = @fsockopen(self::API_URL, 80, $errno, $errstr)) == false) {
 			error_log("Error request method '{$method}'\n\nURL:\n" . self::API_URL . "\n\nData:\n'{$post}'\n\nError No:\n{$errno}\n\nError string:\n'{$errstr}'");
@@ -280,7 +285,7 @@ class REES46 {
 
 			case 'POST':
 				curl_setopt($ch, CURLOPT_POST, true);
-				curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
 				break;
 		}
 
