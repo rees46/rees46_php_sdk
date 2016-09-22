@@ -21,16 +21,9 @@ define('SHOP_SECRET', '7f2df453d92cd48c5e52c1aeb9f4c812');
 // In this example we just prepare array of data instead of database data.
 // So you need to change this code according your shop architecture.
 $orders = array(
-	array(
-		'id' => '153404',
-		'status' => 0
-	),
-	// array(
-	// 	'id' => 'order4',
-	// 	'status' => 1
-	// )
+	array( 'id' => '153404', 'status' => 0 ),
+	array( 'id' => 'order4', 'status' => 1 )
 );
-
 
 
 // ** Prepare CURL object
