@@ -5,6 +5,6 @@ REES46 PHP SDK
 
 Подробное описание SDK здесь:
 
-[http://memo.mkechinov.ru/pages/viewpage.action?pageId=786658](http://memo.mkechinov.ru/pages/viewpage.action?pageId=786658)
+[http://docs.rees46.com/pages/viewpage.action?pageId=786658](http://docs.rees46.com/pages/viewpage.action?pageId=786658)
 
 Примеры работы с API смотрите в файле ```example.php```.
